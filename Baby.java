@@ -97,26 +97,33 @@ public class Baby {
 	
 	//Calculate the minimum expected weight, given the age of the baby and the born weight
 	private double minimumExpectedWeight(int daysSinceBirth, double bornWeight) {
-		if (daysSinceBirth <= 7)  
+		if (daysSinceBirth <= 7)  {
 			// First week of birth
 			return bornWeight - ( ((bornWeight * 0.1) / 7) * daysSinceBirth) ;
+		}
+		double weightAfterFirstWeek = bornWeight * 0.9;
+		
 		if (daysSinceBirth <= 60) { 
 			//between days 8-60, everyday +30grams
-			return bornWeight * 0.9 + (MONTH_0_TO_2_GAIN_PER_DAY * (daysSinceBirth - 7)); 
+			return weightAfterFirstWeek + (MONTH_0_TO_2_GAIN_PER_DAY * (daysSinceBirth - 7)); 
 		}
+		
+		double weightAfterTwoMonths = weightAfterFirstWeek + MONTH_0_TO_2_GAIN_PER_DAY * 53;
+		
 		if (daysSinceBirth <= 120) {
 			//between days 61-120, everyday +25grams
-			return  bornWeight * 0.9 + (MONTH_0_TO_2_GAIN_PER_DAY * 53) +
-					MONTH_2_TO_4_GAIN_PER_DAY * (daysSinceBirth - 60); 
+			return  weightAfterTwoMonths + MONTH_2_TO_4_GAIN_PER_DAY * (daysSinceBirth - 60); 
 		}
+		double weightAfterFourMonths = weightAfterTwoMonths + MONTH_2_TO_4_GAIN_PER_DAY *  60;
+		
 		if (daysSinceBirth <= 240) {
 			//between days 121-240, every day +16grams
-			return bornWeight * 0.9 + (MONTH_0_TO_2_GAIN_PER_DAY * 53) + 
-					(MONTH_2_TO_4_GAIN_PER_DAY *  60) + MONTH_4_TO_8_GAIN_PER_DAY * (daysSinceBirth - 120);
-		} else {
+			return weightAfterFourMonths + MONTH_4_TO_8_GAIN_PER_DAY * (daysSinceBirth - 120);
+		} 
+		double weightAfterEightMonths = weightAfterFourMonths + MONTH_4_TO_8_GAIN_PER_DAY * 120;
+		else {
 			//between days 241-365, every day +8grams
-			return bornWeight * 0.9 + (MONTH_0_TO_2_GAIN_PER_DAY * 53) + 
-					(MONTH_2_TO_4_GAIN_PER_DAY *  60) + MONTH_4_TO_8_GAIN_PER_DAY * (120) + MONTH_8_TO_12_GAIN_PER_DAY * (daysSinceBirth - 240); 
+			return weightAfterEightMonths + MONTH_8_TO_12_GAIN_PER_DAY * (daysSinceBirth - 240); 
 		}
 
 	}
