@@ -5,10 +5,7 @@ public class Baby {
 	Date _dateOfBirth;
 	Weight _birthWeight, _currentWeight;
 	final String DEFAULT_ID = "000000000";
-	final int MONTH_0_TO_2_GAIN_PER_DAY = 30;
-	final int MONTH_2_TO_4_GAIN_PER_DAY = 25;
-	final int MONTH_4_TO_8_GAIN_PER_DAY = 16;
-	final int MONTH_8_TO_12_GAIN_PER_DAY = 8;
+	
 
 	public Baby(String fName, String lName, String id, int day, int month, int year, int birthWeightInGrams) {
 		this._firstName = fName;
@@ -97,6 +94,12 @@ public class Baby {
 	
 	//Calculate the minimum expected weight, given the age of the baby and the born weight
 	private double minimumExpectedWeight(int daysSinceBirth, double bornWeight) {
+		
+	final int MONTH_0_TO_2_GAIN_PER_DAY = 30; final int DAYS_BETWEEN_0_TO_2 = 53;
+	final int MONTH_2_TO_4_GAIN_PER_DAY = 25; final int DAYS_BETWEEN_2_TO_4 = 60;
+	final int MONTH_4_TO_8_GAIN_PER_DAY = 16; final int DAYS_BETWEEN_4_TO_8 = 120;
+	final int MONTH_8_TO_12_GAIN_PER_DAY = 8; 
+		
 		if (daysSinceBirth <= 7)  {
 			// First week of birth
 			return bornWeight - ( ((bornWeight * 0.1) / 7) * daysSinceBirth) ;
@@ -108,19 +111,19 @@ public class Baby {
 			return weightAfterFirstWeek + (MONTH_0_TO_2_GAIN_PER_DAY * (daysSinceBirth - 7)); 
 		}
 		
-		double weightAfterTwoMonths = weightAfterFirstWeek + MONTH_0_TO_2_GAIN_PER_DAY * 53;
+		double weightAfterTwoMonths = weightAfterFirstWeek + MONTH_0_TO_2_GAIN_PER_DAY * DAYS_BETWEEN_0_TO_2;
 		
 		if (daysSinceBirth <= 120) {
 			//between days 61-120, everyday +25grams
 			return  weightAfterTwoMonths + MONTH_2_TO_4_GAIN_PER_DAY * (daysSinceBirth - 60); 
 		}
-		double weightAfterFourMonths = weightAfterTwoMonths + MONTH_2_TO_4_GAIN_PER_DAY *  60;
+		double weightAfterFourMonths = weightAfterTwoMonths + MONTH_2_TO_4_GAIN_PER_DAY *  DAYS_BETWEEN_2_TO_4;
 		
 		if (daysSinceBirth <= 240) {
 			//between days 121-240, every day +16grams
 			return weightAfterFourMonths + MONTH_4_TO_8_GAIN_PER_DAY * (daysSinceBirth - 120);
 		} 
-		double weightAfterEightMonths = weightAfterFourMonths + MONTH_4_TO_8_GAIN_PER_DAY * 120;
+		double weightAfterEightMonths = weightAfterFourMonths + MONTH_4_TO_8_GAIN_PER_DAY * DAYS_BETWEEN_4_TO_8;
 		else {
 			//between days 241-365, every day +8grams
 			return weightAfterEightMonths + MONTH_8_TO_12_GAIN_PER_DAY * (daysSinceBirth - 240); 
