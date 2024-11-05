@@ -4,8 +4,10 @@ public class Weight {
 	int _kilos, _grams;
 	final int MIN_GRAM = 0;
 	final int MAX_GRAM = 999;
-	final int MIN_KG = 0;
-	final int DEFAULT_VALUE = 0;
+	final int MIN_KG = 1;
+	final int DEFAULT_VALUE_KG = 1;
+	final int DEFAULT_VALUE_GR = 0;
+
 
 	public Weight(int kilos, int grams) {
 		this._kilos = kilos >= MIN_KG ? kilos : DEFAULT_VALUE;
@@ -23,8 +25,8 @@ public class Weight {
 			this._kilos = totalGrams / 1000; // convert the KG to grams
 			this._grams = totalGrams % 1000; // What is "left over" from dividing by 1000 is the gram
 		} else {
-			this._kilos = DEFAULT_VALUE;
-			this._grams = DEFAULT_VALUE;
+			this._kilos = DEFAULT_VALUE_KG;
+			this._grams = DEFAULT_VALUE_GR;
 		}
 	}
 
@@ -60,7 +62,8 @@ public class Weight {
 	}
 
 	public Weight add(int grams) {
+		final int MINIMUM_WEIGHT = 1000; //Minimum weight in grams
 		int gramConversion = this._grams + this._kilos * 1000; // Convert the weight to grams only.
-		return gramConversion + grams >= 0 ? new Weight(gramConversion + grams) : new Weight(gramConversion);
+		return gramConversion + grams >= MINIMUM_WEIGHT ? new Weight(gramConversion + grams) : new Weight(gramConversion);
 	}
 }
